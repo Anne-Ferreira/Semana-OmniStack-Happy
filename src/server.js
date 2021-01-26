@@ -1,13 +1,18 @@
 const express = require('express');
 const path = require('path');
+const pages = require('./page.js')
 
 const server = express();
 server
     .use(express.static('public'))
 
-    .get('/', (request, response) => {
-        return response.sendFile(path.join(__dirname, 'views', 'index.html'))
-    })
+    .set('views', path.join(__dirname, "views"))
+    .set('view engine', 'hbs')
 
+    .get('/', pages.index)
+    .get('/orphanage', pages.orphanage)
+    .get('/orphanages', pages.orphanages)
+    .get('/create-orphanage', pages.createOrphanage)
+    
 
 server.listen(5500)
